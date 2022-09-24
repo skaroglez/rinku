@@ -140,7 +140,7 @@ INSERT INTO usuarios (id, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_e
 -- Estructura de tabla para la tabla 'usuariosdetalles'
 --
 
-CREATE TABLE IF NOT EXISTS usuariosdetalles (
+CREATE TABLE IF NOT EXISTS usuariosDetalles (
   id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   id_usuario int(10) UNSIGNED NOT NULL,
   id_genero int(10) UNSIGNED NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS usuariosdetalles (
 -- Volcado de datos para la tabla 'usuariosdetalles'
 --
 
-INSERT INTO usuariosdetalles (id, id_usuario, id_genero, vc_nombre, vc_apellidos, vc_email, vc_password, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
+INSERT INTO usuariosDetalles (id, id_usuario, id_genero, vc_nombre, vc_apellidos, vc_email, vc_password, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
 (1, 1, 1, 'Sistema', 'Bladmir 2', 'sistema@bladmir.com', 'Sistema123.', 1, 0, '2022-09-23 18:30:31', '2022-09-23 18:30:31', NULL, 1),
 (2, 2, 1, 'Admin', 'Bladmir', 'admin@bladmir.com', 'Admin123.', 1, 0, '2022-09-23 18:30:31', '2022-09-23 18:30:31', NULL, 1),
 (3, 3, 2, 'Carolina', 'Gonzalez', 'caro@correo.com', '1', 1, 0, '2022-09-23 18:36:59', '2022-09-08 00:36:59', NULL, 2);
@@ -174,7 +174,7 @@ INSERT INTO usuariosdetalles (id, id_usuario, id_genero, vc_nombre, vc_apellidos
 -- Estructura de tabla para la tabla 'usuariosroles'
 --
 
-CREATE TABLE IF NOT EXISTS usuariosroles (
+CREATE TABLE IF NOT EXISTS usuariosRoles (
   id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   id_usuario int(10) UNSIGNED NOT NULL,
   id_rol int(10) UNSIGNED NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS usuariosroles (
 -- Volcado de datos para la tabla 'usuariosroles'
 --
 
-INSERT INTO usuariosroles (id, id_usuario, id_rol, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
+INSERT INTO usuariosRoles (id, id_usuario, id_rol, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
 (1, 1, 1, 1, 0, '2022-09-23 18:30:31', '2022-09-23 18:30:31', NULL, 1),
 (2, 2, 2, 1, 0, '2022-09-23 18:30:31', '2022-09-23 18:30:31', NULL, 1),
 (3, 3, 2, 1, 0, '2022-09-23 18:36:59', '2022-09-08 00:36:59', NULL, 2);
@@ -204,7 +204,7 @@ INSERT INTO usuariosroles (id, id_usuario, id_rol, sn_activo, sn_eliminado, dt_r
 -- Estructura de tabla para la tabla 'usuariostokens'
 --
 
-CREATE TABLE IF NOT EXISTS usuariostokens (
+CREATE TABLE IF NOT EXISTS usuariosTokens (
   id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   id_usuario int(10) UNSIGNED NOT NULL,
   id_rol int(10) UNSIGNED NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS usuariostokens (
 -- Volcado de datos para la tabla 'usuariostokens'
 --
 
-INSERT INTO usuariostokens (id, id_usuario, id_rol, id_token, id_dispositivo, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
+INSERT INTO usuariosTokens (id, id_usuario, id_rol, id_token, id_dispositivo, sn_activo, sn_eliminado, dt_registro, dt_editado, dt_eliminado, id_creador) VALUES
 (2, 2, 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsInJvbCI6Miwia2V5IjoiYmFzZTY0OnFVSDlvaVV2Z0Mwd0ZzS01xRndvOWt2MHd4TVE3MWx2YUZpR29lWmNETGs9IiwiaWF0IjoxNjYyNTc1Nzk0LCJleHAiOjE2OTQxMTE3OTQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0L2dsX2llZXNfZXZlbnRvcy9hcGkvbG9naW4iLCJuYmYiOjE2NjI1NzU3OTQsImp0aSI6IkFpZVAwSnJZdWx6b0lldzUifQ.hIADi28VNjFEqynQ2Hy_aC5RNN4munKSglwPSmSOoB0', NULL, 1, 0, '2022-09-23 18:36:34', '2022-09-08 00:36:34', NULL, 2);
 --
 -- Restricciones para tablas volcadas
@@ -240,21 +240,21 @@ ALTER TABLE dias
 --
 -- Filtros para la tabla 'usuariosdetalles'
 --
-ALTER TABLE usuariosdetalles
+ALTER TABLE usuariosDetalles
   ADD CONSTRAINT FK_UsuariosDetalles_Usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
   ADD CONSTRAINT usuariosdetalles_ibfk_1 FOREIGN KEY (id_genero) REFERENCES generos (id);
 
 --
 -- Filtros para la tabla 'usuariosroles'
 --
-ALTER TABLE usuariosroles
+ALTER TABLE usuariosRoles
   ADD CONSTRAINT usuariosroles_ibfk_1 FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
   ADD CONSTRAINT usuariosroles_ibfk_2 FOREIGN KEY (id_rol) REFERENCES roles (id);
 
 --
 -- Filtros para la tabla 'usuariostokens'
 --
-ALTER TABLE usuariostokens
+ALTER TABLE usuariosTokens
   ADD CONSTRAINT usuariostokens_ibfk_1 FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
   ADD CONSTRAINT usuariostokens_ibfk_2 FOREIGN KEY (id_rol) REFERENCES roles (id);
 COMMIT;

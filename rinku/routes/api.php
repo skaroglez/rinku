@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // Login
 Route::get('login/logout', 'LoginController@logout');
 Route::get('login/check', 'LoginController@check');
@@ -24,3 +20,5 @@ Route::get('login/check', 'LoginController@check');
 // USUARIOS
 Route::resource('usuarios','UsuariosController');
 
+// EMPLEADOS
+Route::resource('empleados','EmpleadosController');
