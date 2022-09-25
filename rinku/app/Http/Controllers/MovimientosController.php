@@ -57,19 +57,23 @@ class MovimientosController extends Controller
     $movimientos = [];
     // Obtener movimientos del sistema
     $movimientos = EmpleadosMovimientos::join('empleados as empleado', 'empleadosMovimientos.id_empleado', '=', 'empleado.id')
-    ->join('empleadosRoles as r', 'empleado.id_rol', '=', 'r.id')
+    ->join('empleadosRoles as re', 'empleado.id_rol', '=', 're.id')
+    ->join('empleadosRoles as r', 'empleadosMovimientos.id_rol', '=', 'r.id')
     ->where([
       ['empleadosMovimientos.sn_activo', '=', 1],
       ['empleado.sn_activo', '=', 1],
-      ['r.sn_activo',         '=', 1],
+      ['re.sn_activo',         '=', 1],
+       ['r.sn_activo',         '=', 1],
       ['empleadosMovimientos.sn_eliminado',  '=', 0],
       ['empleado.sn_eliminado',  '=', 0],
+      ['re.sn_eliminado',        '=', 0],
       ['r.sn_eliminado',        '=', 0]
     ])
     ->whereNull('empleadosMovimientos.dt_eliminado')
     ->whereNull('empleado.dt_eliminado')
     ->whereNull('r.dt_eliminado')
-    ->selectRaw('empleadosMovimientos.id_empleado, 
+    ->selectRaw('empleadosMovimientos.id,
+              empleadosMovimientos.id_empleado, 
               empleadosMovimientos.dt_fecha, 
               empleadosMovimientos.sn_cubrio_turno, 
               empleadosMovimientos.id_rol, 
@@ -79,6 +83,7 @@ class MovimientosController extends Controller
               empleado.vc_nombre, 
               empleado.id_tipo, 
               empleado.id_rol,
+              re.vc_nombre as vc_rol_empleado,
               r.vc_nombre as vc_rol')
     ->get();
 
@@ -135,9 +140,9 @@ class MovimientosController extends Controller
 
     // Validacion de parametros
     $validator = Validator::make((array)$body, [
-      'dt_fecha' => 'required',
+      'dt_fecha'    => 'required',
       'id_empleado' => 'required',
-      'id_rol' =>'required',
+      'id_rol'      =>'required',
       'nu_entregas' => 'required',
       'nu_horas_extras' => 'required',
       'sn_cubrio_turno' => 'required',    
@@ -196,19 +201,23 @@ class MovimientosController extends Controller
 
     // Obtener empleado
     $movimiento = EmpleadosMovimientos::join('empleados as empleado', 'empleadosMovimientos.id_empleado', '=', 'empleado.id')
-    ->join('empleadosRoles as r', 'empleado.id_rol', '=', 'r.id')
+    ->join('empleadosRoles as re', 'empleado.id_rol', '=', 're.id')
+    ->join('empleadosRoles as r', 'empleadosMovimientos.id_rol', '=', 'r.id')
     ->where([
       ['empleadosMovimientos.sn_activo', '=', 1],
       ['empleado.sn_activo', '=', 1],
-      ['r.sn_activo',         '=', 1],
+      ['re.sn_activo',         '=', 1],
+       ['r.sn_activo',         '=', 1],
       ['empleadosMovimientos.sn_eliminado',  '=', 0],
       ['empleado.sn_eliminado',  '=', 0],
+      ['re.sn_eliminado',        '=', 0],
       ['r.sn_eliminado',        '=', 0]
     ])
     ->whereNull('empleadosMovimientos.dt_eliminado')
     ->whereNull('empleado.dt_eliminado')
     ->whereNull('r.dt_eliminado')
-    ->selectRaw('empleadosMovimientos.id_empleado, 
+    ->selectRaw('empleadosMovimientos.id,
+              empleadosMovimientos.id_empleado, 
               empleadosMovimientos.dt_fecha, 
               empleadosMovimientos.sn_cubrio_turno, 
               empleadosMovimientos.id_rol, 
@@ -217,7 +226,8 @@ class MovimientosController extends Controller
               empleado.nu_numero,
               empleado.vc_nombre, 
               empleado.id_tipo, 
-              empleado.id_rol,
+              empleado.id_rol as id_rol_empleado,
+              re.vc_nombre as vc_rol_empleado,
               r.vc_nombre as vc_rol')
     ->findOrFail($id);
 
@@ -240,10 +250,12 @@ class MovimientosController extends Controller
 
     // Validacion de parametros
     $validator = Validator::make((array)$body, [
-      'nu_numero'       => 'required',
-      'vc_nombre'       => 'required',
-      'id_rol'          => 'required',
-      'id_tipo'         => 'required',     
+      'dt_fecha'    => 'required',
+      'id_empleado' => 'required',
+      'id_rol'      =>'required',
+      'nu_entregas' => 'required',
+      'nu_horas_extras' => 'required',
+      'sn_cubrio_turno' => 'required',   
     ]);
 
 
@@ -255,31 +267,50 @@ class MovimientosController extends Controller
       DB::beginTransaction();
 
       //Verifica si existe el correo en la BD
-      if (Empleados::Filtro()->where('nu_numero', $body->nu_numero)->where('id', '!=', $id)->count() > 0) {
-        throw new Exception('El número ' . $body->nu_numero . ', ya se encuentra registrado.', 418);
-      } else {
+     
 
         // Obtener el Empleado
-        $empleado = Empleados::where([ ['empleados.sn_activo', '=', 1],['empleados.sn_eliminado',  '=', 0] ])
-        ->whereNull('empleados.dt_eliminado')
-        ->selectRaw('empleados.id, 
-          empleados.nu_numero,
-          empleados.vc_nombre, 
-          empleados.id_tipo,
-          empleados.id_rol')
+        $movimiento = EmpleadosMovimientos::join('empleados as empleado', 'empleadosMovimientos.id_empleado', '=', 'empleado.id')
+        ->join('empleadosRoles as re', 'empleado.id_rol', '=', 're.id')
+        ->join('empleadosRoles as r', 'empleadosMovimientos.id_rol', '=', 'r.id')
+        ->where([
+          ['empleadosMovimientos.sn_activo', '=', 1],
+          ['empleado.sn_activo', '=', 1],
+          ['re.sn_activo',         '=', 1],
+          ['r.sn_activo',         '=', 1],
+          ['empleadosMovimientos.sn_eliminado',  '=', 0],
+          ['empleado.sn_eliminado',  '=', 0],
+          ['re.sn_eliminado',        '=', 0],
+          ['r.sn_eliminado',        '=', 0]
+        ])
+        ->whereNull('empleadosMovimientos.dt_eliminado')
+        ->whereNull('empleado.dt_eliminado')
+        ->whereNull('r.dt_eliminado')
+        ->selectRaw('empleadosMovimientos.id,
+                  empleadosMovimientos.id_empleado, 
+                  empleadosMovimientos.dt_fecha, 
+                  empleadosMovimientos.sn_cubrio_turno, 
+                  empleadosMovimientos.id_rol, 
+                  empleadosMovimientos.nu_entregas, 
+                  empleadosMovimientos.nu_horas_extras,
+                  empleado.nu_numero,
+                  empleado.vc_nombre, 
+                  empleado.id_tipo, 
+                  empleado.id_rol as id_rol_empleado,
+                  re.vc_nombre as vc_rol_empleado,
+                  r.vc_nombre as vc_rol')
         ->findOrFail($id);
 
-        
-
-        $empleado->nu_numero  = $body->nu_numero;
-        $empleado->vc_nombre  = $body->vc_nombre;
-        $empleado->id_tipo    = $body->id_tipo;
-        $empleado->id_rol     = $body->id_rol;
-        $empleado->save();
-      }
-
+        $movimiento->dt_fecha = date('Y-m-d', strtotime($body->dt_fecha));
+        $movimiento->id_empleado = $body->id_empleado;
+        $movimiento->id_rol = $body->id_rol;
+        $movimiento->nu_entregas = $body->nu_entregas;
+        $movimiento->nu_horas_extras = $body->nu_horas_extras;
+        $movimiento->sn_cubrio_turno = $body->sn_cubrio_turno;
+        $movimiento->save();
+   
       DB::commit();
-      return ['texto' => 'El empleado ' . $body->vc_nombre . ', fue actualizado correctamente.'];
+      return ['texto' => 'El movimiento, fue actualizado correctamente.'];
     } catch (Exception $e) {
       DB::rollBack();
       return Response::json(['texto' => $e->getMessage()], 418);
@@ -304,15 +335,15 @@ class MovimientosController extends Controller
       DB::beginTransaction();
 
       // Eliminar empleado
-      $empleado = Empleados::Filtro()->findOrFail($id);
+      $movimiento = EmpleadosMovimientos::Filtro()->findOrFail($id);
 
-      $empleado->forceDelete();
+      $movimiento->forceDelete();
 
       DB::commit();
-      return ['texto' => 'El empleado ' . $empleado->vc_nombre . ', fue eliminado correctamente.'];
+      return ['texto' => 'El movimiento, fue eliminado correctamente.'];
     } catch (Exception $e) {
       DB::rollBack();
-      return Response::json(['texto' => 'El empleado, no se pudo eliminar correctamente.'], 418);
+      return Response::json(['texto' => 'El movimiento, no se pudo eliminar correctamente.'], 418);
     }
   }
 }

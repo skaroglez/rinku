@@ -27,7 +27,7 @@
             // MOVIMIENTOS DE EMPLEADOS
               { state: 'movimientos', url: 'movimientos', file: 'movimientos', ext: 'html' },
               { state: 'movimientosNuevo', url: 'movimientos/nuevo', file: 'movimientosNuevo', ext: 'html' },
-              { state: 'movimientosEditar', url: 'movimientos/:id/editar', file: 'movimientosNuevo', ext: 'html' },   
+              { state: 'movimientosEditar', url: 'movimientos/:id/editar', file: 'movimientosNuevo', ext: 'html' },
           ],
           navigation : {
             aside: [

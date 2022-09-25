@@ -25,26 +25,26 @@ app.controller('movimientosController', ['$scope', '$rootScope', '$state', '$sta
       $state.go('movimientosNuevo');
     };
 
-    $scope.editar = function (empleado) {
-      $state.go('movimientosEditar', { id: empleado.id });
+    $scope.editar = function (movimiento) {
+      $state.go('movimientosEditar', { id: movimiento.id });
     };
 
-    $scope.eliminar = function (empleado) {
+    $scope.eliminar = function (movimiento) {
       $message.confirm({
-        text: '¿Estás seguro de eliminar el empleado ' + empleado.vc_nombre + '?',
+        text: '¿Estás seguro de eliminar el movimiento?',
         callback: function (msg) {
           $loading.show();
-          ModelService.delete(empleado.id)
+          ModelService.delete(movimiento.id)
             .success(function () {
               msg.close();
               $scope.actualizar();
-              $message.success('El empleado ' + empleado.vc_nombre + ', fue eliminado correctamente.');
+              $message.success('El movimiento, fue eliminado correctamente.');
             })
             .error(function (error) {
               if (error.texto) {
                 $message.warning(error.texto);
               } else {
-                $message.warning('El empleado ' + empleado.vc_nombre + ', no pudo eliminar correctamente.');
+                $message.warning('El movimiento, no pudo eliminar correctamente.');
               }
             })
             .finally(function () {

@@ -49,8 +49,8 @@
 								<tbody>
 									<tr ng-repeat="movimiento in movimientos | filter:searchText">
 										<td><i class="ti-user"></i></td>
-										<td>[[ movimiento.nu_numero ]] - [[ movimiento.vc_nombre ]] ([[ movimiento.vc_rol ]])</td>
-										<td style="text-align:center;">[[ movimiento.sn_cubrio_turno == 1 ? 'SI' : 'NO' ]]</td>
+										<td>[[ movimiento.nu_numero ]] - [[ movimiento.vc_nombre ]] ([[ movimiento.vc_rol_empleado ]])</td>
+										<td style="text-align:center;">[[ movimiento.sn_cubrio_turno == 1 ? 'SI (' + movimiento.vc_rol + ')' : 'NO' ]]</td>
 										<td style="text-align:center;">[[ movimiento.nu_entregas ]]</td>
 										<td style="text-align:center;">[[ movimiento.nu_horas_extras ]]</td>
 										<td style="text-align:center;">[[ movimiento.dt_fecha | date:'dd/MM/yyyy' ]]</td>

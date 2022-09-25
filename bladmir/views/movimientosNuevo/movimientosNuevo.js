@@ -106,18 +106,21 @@ app.controller('movimientosNuevoController', ['$scope', '$rootScope', '$state', 
 
           $scope.roles = res.roles;
           $scope.empleados = res.empleados;
-
+          
           // Verificar proceso Agregar o Editar
           $util.stateParams(function () {
-
             $scope.flags.editar = true;
-
+         
             ModelService.edit($stateParams.id)
               .success(function (res) {
                 $scope.movimiento = res;
+                $scope.movimiento.id_empleado = String($scope.movimiento.id_empleado);
                 $scope.movimiento.id_rol = String($scope.movimiento.id_rol);
-                $scope.movimiento.id_tipo = String($scope.movimiento.id_tipo);
-                $scope.movimiento.vc_password_re = angular.copy($scope.movimiento.vc_password);
+                $scope.empleadoSeleccionado.id_rol= String($scope.movimiento.id_rol_empleado);
+                $scope.movimiento.dt_fecha = new Date( $scope.movimiento.dt_fecha + ' 00:00:00'),
+                console.log($scope.movimiento);
+                console.log('empleadoSeleccionado');
+                console.log($scope.empleadoSeleccionado);
               })
               .error(function (error) {
                 if (error.texto) {
