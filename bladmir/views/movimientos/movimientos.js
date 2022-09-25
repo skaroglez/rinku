@@ -1,18 +1,18 @@
 /*
 |
 | Carolina Gonzalez Chavez
-| - Controllador de la Vista de Empleados
+| - Controllador de la Vista de Movimientos
 |
 */
 
-var app = angular.module('empleados', []);
+var app = angular.module('movimientos', []);
 
 // Controller
-app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$util', '$message', '$loading', '$validate', 'ModelService', '$cookieStore',
+app.controller('movimientosController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$util', '$message', '$loading', '$validate', 'ModelService', '$cookieStore',
   function ($scope, $rootScope, $state, $stateParams, $location, $util, $message, $loading, $validate, ModelService, $cookieStore) {
 
     // Scope Variables
-    $scope.empleados = [];
+    $scope.movimientos = [];
 
     $scope.cargando = false;
 
@@ -22,11 +22,11 @@ app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$state
     };
 
     $scope.agregar = function () {
-      $state.go('empleadosNuevo');
+      $state.go('movimientosNuevo');
     };
 
     $scope.editar = function (empleado) {
-      $state.go('empleadosEditar', { id: empleado.id });
+      $state.go('movimientosEditar', { id: empleado.id });
     };
 
     $scope.eliminar = function (empleado) {
@@ -56,13 +56,13 @@ app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$state
 
     $scope.init = function () {
 
-      ModelService.addModel('empleados');
+      ModelService.addModel('movimientos');
 
       $scope.cargando = true;
 
       ModelService.list()
         .success(function (res) {
-          $scope.empleados = res;
+          $scope.movimientos = res;
         })
         .error(function () {
           $message.warning("No se obtuvieron los registros.");

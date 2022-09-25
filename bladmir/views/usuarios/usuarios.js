@@ -65,7 +65,7 @@ app.controller('usuariosController', ['$scope', '$rootScope', '$state', '$stateP
           $scope.usuarios = res;
         })
         .error(function () {
-          $message.warning("No se obtener los registros.");
+          $message.warning("No se obtuvieron los registros.");
         })
         .finally(function () {
           $scope.cargando = false;

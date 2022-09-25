@@ -22,3 +22,5 @@ Route::resource('usuarios','UsuariosController');
 
 // EMPLEADOS
 Route::resource('empleados','EmpleadosController');
+// MOVIMIENTOS
+Route::resource('movimientos','MovimientosController');

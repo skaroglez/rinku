@@ -1,18 +1,18 @@
 /*
 |
 | Carolina Gonzalez Chavez
-| - Controllador de la Vista de Empleados
+| - Controllador de la Vista de EmpleadosMovimientos
 |
 */
 
-var app = angular.module('empleados', []);
+var app = angular.module('empleadosMovimientos', []);
 
 // Controller
-app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$util', '$message', '$loading', '$validate', 'ModelService', '$cookieStore',
+app.controller('empleadosMovimientosController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$util', '$message', '$loading', '$validate', 'ModelService', '$cookieStore',
   function ($scope, $rootScope, $state, $stateParams, $location, $util, $message, $loading, $validate, ModelService, $cookieStore) {
 
     // Scope Variables
-    $scope.empleados = [];
+    $scope.movimientos = [];
 
     $scope.cargando = false;
 
@@ -22,29 +22,29 @@ app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$state
     };
 
     $scope.agregar = function () {
-      $state.go('empleadosNuevo');
+      $state.go('movimientosNuevo');
     };
 
-    $scope.editar = function (empleado) {
-      $state.go('empleadosEditar', { id: empleado.id });
+    $scope.editar = function (movimiento) {
+      $state.go('movimientosEditar', { id: movimiento.id });
     };
 
-    $scope.eliminar = function (empleado) {
+    $scope.eliminar = function (movimiento) {
       $message.confirm({
-        text: '¿Estás seguro de eliminar el empleado ' + empleado.vc_nombre + '?',
+        text: '¿Estás seguro de eliminar el movimiento ' + movimiento.vc_nombre + '?',
         callback: function (msg) {
           $loading.show();
-          ModelService.delete(empleado.id)
+          ModelService.delete(movimiento.id)
             .success(function () {
               msg.close();
               $scope.actualizar();
-              $message.success('El empleado ' + empleado.vc_nombre + ', fue eliminado correctamente.');
+              $message.success('El movimiento ' + movimiento.vc_nombre + ', fue eliminado correctamente.');
             })
             .error(function (error) {
               if (error.texto) {
                 $message.warning(error.texto);
               } else {
-                $message.warning('El empleado ' + empleado.vc_nombre + ', no pudo eliminar correctamente.');
+                $message.warning('El movimiento ' + movimiento.vc_nombre + ', no pudo eliminar correctamente.');
               }
             })
             .finally(function () {
@@ -56,13 +56,13 @@ app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$state
 
     $scope.init = function () {
 
-      ModelService.addModel('empleados');
+      ModelService.addModel('empleadosMovimientos');
 
       $scope.cargando = true;
 
       ModelService.list()
         .success(function (res) {
-          $scope.empleados = res;
+          $scope.movimientos = res;
         })
         .error(function () {
           $message.warning("No se obtuvieron los registros.");
