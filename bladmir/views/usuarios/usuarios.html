@@ -1,0 +1,73 @@
+<!--
+|
+| Carolina Gonzalez Chavez
+| - Vista de usuarios
+|
+-->
+
+<div class="view usuarios" ng-controller="usuariosController">
+
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="col-sm-6 ccs-title">
+				<h2>Usuarios</h2>
+				<ul>
+					<li><span><a href="#/inicio">Inicio</a></span></li>
+					<li><span> / Usuarios</span></li>
+				</ul>
+			</div>
+			<div class="col-sm-6 ccs-buttons">
+				<button class="btn btn-info" ng-click="actualizar()">
+					<span ng-if="!cargando"><i class="fa fa-refresh fa-fw"></i> Actualizar</span>
+					<span ng-if="cargando"><i class="fa fa-refresh fa-fw"></i> Cargando...</span>
+				</button>
+				<button class="btn btn-success" ng-click="agregar()" ng-if="aux.rol.id != 2"><i class="fa fa-plus fa-fw"></i> Crear nuevo</button>
+			</div>
+		</div>
+
+		<input type="text" class="form-control form-control-search" ng-model="searchText"
+			placeholder="Buscar en los resultados actuales..."><br />
+
+		<div class="row section">
+			<div class="col-xs-12">
+				<div class="panel ccs-panel">
+					<div class="panel-heading">
+						<h5>Listado</h5>
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<th width="30"><i class="ti-user"></i></th>
+									<th>Usuario</th>
+									<th>Correo eléctronico</th>
+									<th>Rol</th>
+									<th width="61"></th>
+								</thead>
+								<tbody>
+									<tr ng-repeat="usuario in usuarios | filter:searchText" ng-hide="usuario.id == 1">
+										<td><i class="ti-user"></i></td>
+										<td>[[ usuario.vc_nombre ]] [[ usuario.vc_apellido ]]</td>
+										<td>[[ usuario.vc_email ]]</td>
+										<td>[[ usuario.vc_rol ]]</td>
+										<td>
+											<a ng-click="editar(usuario)" class="tooltip">
+                        <i class="fa fa-pencil fa-fw"></i>
+                        <span class="tooltiptext">Editar</span>
+                      </a>
+											<a ng-click="eliminar(usuario)" class="tooltip">
+                        <i class="fa fa-trash fa-fw"></i>
+                        <span class="tooltiptext">Eliminar</span>
+                      </a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

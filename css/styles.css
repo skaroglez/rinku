@@ -1,0 +1,107 @@
+/*========================== GENERAL =========================*/
+
+:root {--gold: #B0963D; --gold-light: #CCB051; --gold-dark: #6E5D26; --beige: #F6F0D1; --white: #FFFFFF; --black: #202020; --grey: #B2B2B2; --title-font: 'Elsie', cursive; --text-font: 'Montserrat', sans-serif;}
+body {background-color: var(--white);}
+h2 {font-family: var(--title-font); font-size: 2.5rem; font-weight: 400;}
+@media (max-width: 991px) {h2 {font-size: 2rem;}}
+p {font-family: var(--text-font); font-size: 0.875rem; font-weight: 400;}
+a {font-family: var(--text-font); font-size: 0.813rem; font-weight: 600; text-decoration: none;}
+.btn.btn-primary {font-family: var(--text-font); font-size: 0.813rem; font-weight: 600; color: var(--white)!important; background-color: var(--gold); border-color: var(--gold); border-radius: 0; padding: 16px 32px;}
+.btn.btn-primary:hover {background-color: var(--gold-light); border-color: var(--gold-light);}
+.btn.btn-primary:focus {box-shadow: none;}
+.btn.btn-secundary {font-family: var(--text-font); font-size: 0.813rem; font-weight: 600; color: var(--black); background-color: var(--white); border-color: var(--black); border-radius: 0; padding: 16px 32px;}
+.btn.btn-secundary:hover {color: var(--white); background-color: var(--black);}
+.btn.btn-secundary:focus {box-shadow: none;}
+
+/*========================== HEADER =========================*/
+
+.header .navbar-brand {width: 160px;}
+.header .navbar-toggler:focus {box-shadow: none;}
+@media (max-width: 991px) {.header .nav-item {border-bottom: 1px solid rgb(110, 93, 38, 0.1);}}
+.header .nav-link {color: var(--black); font-family: var(--text-font); font-size: 0.75rem; font-weight: 400;}
+@media (max-width: 991px) {.header .nav-link {display: inline-block; font-size: 0.875rem;}}
+.header .nav-link:hover {color: var(--gold) !important;}
+.header .nav-link.active {color: var(--gold) !important; font-weight: 700 !important;}
+.header .nav-link.active::after {content: ""; display: block; margin: 2px auto; width: 90%; height: 2px; background-color: var(--gold);}
+
+/*===================== FOOTER =====================*/
+
+.footer {background-color: var(--black);}
+.footer .scroll-top {width: 40px; height: 40px; position: fixed; bottom: 27px; right: 20px; z-index: 99; color: #fff; font-size: 18px !important; cursor: pointer; border-radius: 3px !important; border: none; display: none; padding: 0 !important; transition: all .3s ease-in-out;}
+.footer .footer-container .title-footer { font-size: 0.813rem; font-weight: 600; color: var(--white);}
+.footer .footer-container .social .social-icon {color: var(--grey); margin-right: 10px;}
+.footer .footer-container .social .social-icon:hover {color: var(--gold); cursor: pointer;}
+.footer .footer-container .menu-footer {list-style: none;}
+.footer .footer-container .menu-footer .link-footer {color: var(--white); font-size: 0.75rem; font-weight: 400; text-decoration: none;}
+.footer .footer-container .menu-footer .link-footer:hover {color: var(--gold); cursor: pointer;}
+.footer .footer-container .menu-footer .text-footer {color: var(--white); font-size: 0.75rem!important; font-weight: 400 !important;}
+
+/*================== HOME ==================*/
+
+.view.home .carousel-hero .image-hero {width: 100%;}
+.view.home .about-us .about-us-text {max-width: 500px; line-height: 25px;}
+.view.home .season { background-color: var(--beige);}
+.view.home .season a {color: var(--black);}
+.view.home .season .title-product:hover {color: var(--gold);}
+.view.home .season .title-product {font-size: 0.875rem; font-weight: 600;}
+.view.home .season .price-product {margin: 0;}
+.view.home .season .ornament-left {position: absolute; top: 0; left: 0; width: 30px; height: 30px; background-color: var(--white);}
+.view.home .season .ornament-right {position: absolute; bottom: 0; right: 0; width: 30px; height: 30px; background-color: var(--white);}
+.view.home .popular a {color: var(--black);}
+.view.home .popular .title-product:hover {color: var(--gold);}
+.view.home .popular .title-product {font-size: 0.875rem; font-weight: 600;}
+.view.home .instagram-feed {padding: 0px;}
+
+/*================== PRODUCT CATEGORIES ==================*/
+
+.view.product-categories .categories .categories-filter { border-right: 1px solid var(--grey);}
+@media (max-width: 767px) {.view.product-categories .categories .categories-filter {border-right: none; border-top: 1px solid var(--grey);}}
+.view.product-categories .categories .categories-filter ul {list-style: none; padding: 0px;}
+.view.product-categories .categories .categories-filter .category .right {float: right; line-height: 2; padding-right: 0.5rem;}
+.view.product-categories .categories .categories-filter .category a {color: var(--black); font-family: var(--text-font); font-size: 0.75rem; font-weight: 400;}
+.view.product-categories .categories .categories-filter .category a:hover {color: var(--gold);}
+.view.product-categories .categories .categories-filter .category a.active {position: relative; color: var(--black); font-weight: 700;}
+.view.product-categories .categories .categories-filter ul li a.active::before {content: "\2022"; color: var(--gold); position: absolute; font-size: 1.563rem; line-height: 0; top: 5px; left: -15px;}
+.view.product-categories .categories .categories-filter .category a.disable {color: var(--grey);}
+.view.product-categories .categories-gallery {height: 875px; overflow-y: auto; overflow-x: hidden; --bs-gutter-x: 1rem;}
+.view.product-categories .categories-gallery a {color: var(--black);}
+.view.product-categories .categories-gallery .title-product {font-size: 0.875rem; font-weight: 600;}
+
+/*================== PRODUCT DETAIL ==================*/
+
+.view.product-detail .detail .card-wrapper { max-width: 516px; margin: 0 auto;}
+.view.product-detail .detail .card {border: none;}
+.view.product-detail .detail img {width: 100%; display: block;}
+.view.product-detail .detail .img-display {overflow: hidden;}
+.view.product-detail .detail .img-showcase {display: flex; width: 100%; transition: all 0.5s ease;}
+.view.product-detail .detail .img-showcase img {min-width: 100%;}
+.view.product-detail .detail .img-select {display: flex;}
+.view.product-detail .detail .img-item {margin: 0.625rem;}
+.view.product-detail .detail .img-item:first-child {margin-left: 0px !important;}
+.view.product-detail .detail .img-item:last-child {margin-right: 0px !important;}
+.view.product-detail .detail .img-item:nth-child(1){margin-right: 0;}
+.view.product-detail .detail .img-item:nth-child(2){margin-right: 0;}
+.view.product-detail .detail .img-item:nth-child(3){margin-right: 0;}
+.view.product-detail .detail .img-item:hover {opacity: 0.8;}
+.view.product-detail .detail .product-title {font-family: var(--title-font); font-size: 1.25rem; font-weight: 400;}
+.view.product-detail .detail .product-price {font-family: var(--text-font); font-size: 2.125rem; font-weight: 700;}
+.view.product-detail .detail .product-description {width: 380px;}
+.view.product-detail .detail .store-availability {font-weight: 700;}
+.view.product-detail .detail .store-information {padding-left: 20px;}
+.view.product-detail .detail .store-information li {color: var(--gold);}
+.view.product-detail .detail .store-information li:nth-child(2) {color: transparent;}
+.view.product-detail .detail .store-information li .name-store {color: var(--black); font-weight: 600;}
+.view.product-detail .detail .store-information li .address-store {color: var(--black); list-style: none;}
+.view.product-detail .detail .product-size {font-weight: 700;}
+.view.product-detail .related a {color: var(--black);}
+.view.product-detail .related .title-product:hover {color: var(--gold);}
+.view.product-detail .related .title-product {font-size: 0.875rem; font-weight: 600;}
+.view.product-detail .btn.btn-secundary:hover {color: var(--white); background-color: var(--black);}
+
+/*================== ABOUT US ==================*/
+
+.view.about-us .about-us-info .about-us-text {max-width: 500px; line-height: 25px;}
+.view.about-us .mission .mission-text {max-width: 500px; line-height: 25px;}
+.view.about-us .mission .mission-ornament {width: 120px; height: 4px; background-color: var(--beige);}
+.view.about-us .history {background-color: var(--beige);}
+.view.about-us .history .history-image-container img {width: 95%; max-width: 300px;}

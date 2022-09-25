@@ -1,0 +1,105 @@
+<!--
+|
+| Carolina Gonzalez Chavez
+| - Vista de usuariosNuevo
+|
+-->
+
+<div class="view usuariosNuevo" ng-controller="usuariosNuevoController">
+
+  <div class="container-fluid">
+    <div class="row header">
+      <div class="col-sm-6 ccs-title">
+        <h2>Usuarios</h2>
+        <ul>
+          <li><span><a href="#/inicio">Inicio</a></span></li>
+          <li><span> / <a href="#/usuarios">Usuarios</a></span></li>
+          <li>
+            <span ng-show="!flags.editar"> / Nuevo</span>
+            <span ng-show="flags.editar"> / Editar</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6 ccs-buttons">
+        <button class="btn btn-info" ng-click="regresar()">
+          <i class="fa fa-arrow-left fa-fw"></i> Regresar
+        </button>
+        <button class="btn btn-success" ng-click="guardar()">
+          <i class="fa fa-hdd-o fa-fw"></i> <span ng-if="!flags.editar">Guardar</span><span
+            ng-if="flags.editar">Actualizar</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row section">
+      <div class="col-xs-12">
+        <div class="panel ccs-panel">
+          <div class="panel-heading">
+            <h5>Formulario</h5>
+          </div>
+          <div class="panel-body">
+            <form onSubmit="return false;" ng-submit="guardar()" class="form-validate form-horizontal bordered-row">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Nombre</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control required" ng-model="usuario.vc_nombre" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Apellidos</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control required" ng-model="usuario.vc_apellidos" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Género</label>
+                <div class="col-sm-6">
+                  <select class="form-control required" ng-model="usuario.id_genero">
+                    <option value="">Seleccionar Género...</option>
+                    <option ng-repeat="genero in generos" value="[[ genero.id ]]">[[ genero.vc_nombre ]]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Rol</label>
+                <div class="col-sm-6">
+                  <select class="form-control required" ng-model="usuario.id_rol">
+                    <option value="">Seleccionar Rol...</option>
+                    <option ng-repeat="rol in roles" value="[[ rol.id ]]">[[ rol.vc_nombre ]]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Correo electrónico</label>
+                <div class="col-sm-6">
+                  <input ng-disabled="aux.rol.id == 3 && flags.editar" type="email" class="form-control required" ng-model="usuario.vc_email" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Contraseña</label>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control required" ng-model="usuario.vc_password" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Confirmar contraseña</label>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control required" ng-model="usuario.vc_password_re" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="content-box text-center">
+                  <button class="btn btn-success">
+                    <i class="fa fa-hdd-o fa-fw"></i> <span ng-if="!flags.editar">Guardar</span><span
+                      ng-if="flags.editar">Actualizar</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,98 @@
+<!--
+|
+| Carolina Gonzalez Chavez
+| - Vista de movimientosNuevo
+|
+-->
+
+<div class="view movimientosNuevo" ng-controller="movimientosNuevoController">
+
+  <div class="container-fluid">
+    <div class="row header">
+      <div class="col-sm-6 ccs-title">
+        <h2>Movimientos</h2>
+        <ul>
+          <li><span><a href="#/inicio">Inicio</a></span></li>
+          <li><span> / <a href="#/movimientos">Movimientos</a></span></li>
+          <li>
+            <span ng-show="!flags.editar"> / Nuevo</span>
+            <span ng-show="flags.editar"> / Editar</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6 ccs-buttons">
+        <button class="btn btn-info" ng-click="regresar()">
+          <i class="fa fa-arrow-left fa-fw"></i> Regresar
+        </button>
+        <button class="btn btn-success" ng-click="guardar()">
+          <i class="fa fa-hdd-o fa-fw"></i> <span ng-if="!flags.editar">Guardar</span><span
+            ng-if="flags.editar">Actualizar</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row section">
+      <div class="col-xs-12">
+        <div class="panel ccs-panel">
+          <div class="panel-heading">
+            <h5>Formulario</h5>
+          </div>
+          <div class="panel-body">
+            <form onSubmit="return false;" ng-submit="guardar()" class="form-validate form-horizontal bordered-row">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Empleado</label>
+                <div class="col-sm-7">
+                  <select class="form-control required" ng-model="movimiento.id_empleado" ng-change="empleadoChange()">
+                    <option value="">Seleccionar empleado...</option>
+                    <option ng-repeat="empleado in empleados" value="[[ empleado.id ]]">[[ empleado.nu_numero ]] - [[ empleado.vc_nombre ]] ([[ empleado.vc_rol]])</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" ng-if="empleadoSeleccionado.id_rol == 3">
+                <label class="col-sm-3 control-label">¿Cubrio turno?</label>
+                <div class="col-sm-2">
+									<button type="button" ng-class="{'btn-check' : movimiento.sn_cubrio_turno}" class="btn btn-default btn-tipo btn-sn_cubrio_turno" ng-click="cambiar_sn_cubrio_turno(1);">SI</button>
+									<button type="button" ng-class="{'btn-check' : !movimiento.sn_cubrio_turno}" class="btn btn-default btn-tipo btn-sn_cubrio_turno" ng-click="cambiar_sn_cubrio_turno(0);">NO</button>
+								</div>
+                <label class="col-sm-1 control-label" ng-if="movimiento.sn_cubrio_turno">Rol</label>
+                <div class="col-sm-4" ng-if="movimiento.sn_cubrio_turno">
+                  <select class="form-control required" ng-model="movimiento.id_rol">
+                    <option value="">Seleccionar Rol...</option>
+                    <option ng-repeat="rol in roles" value="[[ rol.id ]]" ng-hide="rol.id == 3">[[ rol.vc_nombre ]]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Fecha</label>
+                <div class="col-sm-7">
+                  <input type="date" class="form-control required" ng-model="movimiento.dt_fecha">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Cantidad de entregas</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control required" ng-model="movimiento.nu_entregas" placeholder="" maxlength="150">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Cantidad de horas extras</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control required" ng-model="movimiento.nu_horas_extras" placeholder="" maxlength="150">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="content-box text-center">
+                  <button class="btn btn-success">
+                    <i class="fa fa-hdd-o fa-fw"></i> <span ng-if="!flags.editar">Guardar</span><span
+                      ng-if="flags.editar">Actualizar</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
