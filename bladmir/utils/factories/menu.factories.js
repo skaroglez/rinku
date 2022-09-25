@@ -24,6 +24,7 @@
               { state: 'empleados', url: 'empleados', file: 'empleados', ext: 'html' },
               { state: 'empleadosNuevo', url: 'empleados/nuevo', file: 'empleadosNuevo', ext: 'html' },
               { state: 'empleadosEditar', url: 'empleados/:id/editar', file: 'empleadosNuevo', ext: 'html' },
+              { state: 'empleadosSueldo', url: 'empleados/:id/sueldo', file: 'empleadosSueldo', ext: 'html' },
             // MOVIMIENTOS DE EMPLEADOS
               { state: 'movimientos', url: 'movimientos', file: 'movimientos', ext: 'html' },
               { state: 'movimientosNuevo', url: 'movimientos/nuevo', file: 'movimientosNuevo', ext: 'html' },

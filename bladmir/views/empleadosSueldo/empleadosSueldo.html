@@ -1,0 +1,74 @@
+<!--
+|
+| Carolina Gonzalez Chavez
+| - Vista de empleadosSueldo
+|
+-->
+
+<div class="view empleadosSueldo" ng-controller="empleadosSueldoController">
+
+  <div class="container-fluid">
+    <div class="row header">
+      <div class="col-sm-6 ccs-title">
+        <h2>Empleados</h2>
+        <ul>
+          <li><span><a href="#/inicio">Inicio</a></span></li>
+          <li><span> / <a href="#/empleados">Empleados</a></span></li>
+          <li>
+            <span ng-show="flags.editar"> / Sueldo</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6 ccs-buttons">
+        <button class="btn btn-info" ng-click="regresar()">
+          <i class="fa fa-arrow-left fa-fw"></i> Regresar
+        </button>
+        <button class="btn btn-success" ng-click="guardar()">
+          <i class="fa fa-hdd-o fa-fw"></i> <span ng-if="!flags.editar">Guardar</span><span
+            ng-if="flags.editar">Actualizar</span>
+        </button>
+      </div>
+      <div class="col-sm-12 ccs-title">
+        <h5>[[empleado.nu_numero]] - [[empleado.vc_nombre]] ([[empleado.vc_rol]] - [[ empleado.id_tipo == 1 ? 'Interno' : 'Externo' ]])</h5>
+      </div>
+    </div>
+    <div class="row section">
+			<div class="col-xs-12">
+				<div class="panel ccs-panel">
+					<div class="panel-heading">
+						<h5>Listado</h5>
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<th width="30"><i class="ti-dollar"></i></th>
+									<th>Mes</th>
+                  <th style="text-align:center;">Sueldo base por jornada</th>
+                  <th style="text-align:center;">Adicional por entregas</th>
+                  <th style="text-align:center;">Bono por horas extras</th>
+                  <th style="text-align:center;">Retencion ISR</th>                
+                  <th style="text-align:center;">Sueldo en vales de despensa</th>
+                  <th style="text-align:center;">Sueldo final</th>
+								</thead>
+								<tbody>
+                  <tr ng-repeat="movimiento in movimientosMeses | filter:searchText">
+                    <th><i class="ti-dollar"></i></th>
+                    <td>[[ movimiento.vc_mes ]] [[ movimiento.anio ]]</td>
+                    <td style="text-align:center;" title="8hrs de jornada a $[[ movimiento.nu_sueldo_base_hora ]] por hora">$[[ movimiento.nu_sueldo_base ]]</td>
+                    <td style="text-align:center;" title="Total entregas: [[ movimiento.total_entregas ]]">$[[ movimiento.nu_total_sueldo_entregas ]]</td>
+                    <td style="text-align:center;" title="Total horas extras: [[ movimiento.total_horas_extras ]]">$[[ movimiento.nu_total_sueldo_bono ]]</td>
+                    <td style="text-align:center;">$[[ movimiento.nu_cantidad_retenida_isr ]]</td>                    
+                    <td style="text-align:center;">$[[ movimiento.nu_sueldo_vales_despensa ]]</td>
+                    <td style="text-align:center;" title="Sueldo con bonos y menos retención ISR">$[[ movimiento.nu_sueldo_final ]]</td>
+                  </tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+
+</div>

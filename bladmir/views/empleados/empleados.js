@@ -28,7 +28,9 @@ app.controller('empleadosController', ['$scope', '$rootScope', '$state', '$state
     $scope.editar = function (empleado) {
       $state.go('empleadosEditar', { id: empleado.id });
     };
-
+    $scope.sueldo = function (empleado) {
+      $state.go('empleadosSueldo', { id: empleado.id });
+    };
     $scope.eliminar = function (empleado) {
       $message.confirm({
         text: '¿Estás seguro de eliminar el empleado ' + empleado.vc_nombre + '?',

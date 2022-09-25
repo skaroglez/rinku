@@ -21,6 +21,7 @@ Route::get('login/check', 'LoginController@check');
 Route::resource('usuarios','UsuariosController');
 
 // EMPLEADOS
+Route::get('empleados/{id}/sueldo', 'EmpleadosController@obtenerSueldo');
 Route::resource('empleados','EmpleadosController');
 // MOVIMIENTOS
 Route::resource('movimientos','MovimientosController');

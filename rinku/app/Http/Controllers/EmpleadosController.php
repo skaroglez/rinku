@@ -16,6 +16,7 @@ use Illuminate\Validation\Rule;
 
 use App\Models\Empleados;
 use App\Models\EmpleadosRoles;
+use App\Models\EmpleadosMovimientos;
 
 class EmpleadosController extends Controller
 {
@@ -276,5 +277,72 @@ class EmpleadosController extends Controller
       DB::rollBack();
       return Response::json(['texto' => 'El empleado, no se pudo eliminar correctamente.'], 418);
     }
+  }
+
+  public function obtenerSueldo($id){
+    // Verificación para el uso del Controllador
+    $body = (object)Request::all();
+    if (!$this->validateController($body->usuario)) {
+      return Response::json(['texto' => 'Actualmente no cuenta con los permisos necesarios.'], 418);
+    }
+
+    $empleado = Empleados::Filtro()->findOrFail($id);
+    $movimientos = Empleados::join('empleadosMovimientos as em', 'empleados.id', '=', 'em.id_empleado')
+    ->where([
+      ['empleados.sn_activo', '=', 1],
+      ['empleados.sn_eliminado',  '=', 0],
+      ['em.sn_activo', '=', 1],
+      ['em.sn_eliminado',  '=', 0],
+    ])
+    ->whereNull('empleados.dt_eliminado')
+    ->whereNull('em.dt_eliminado')
+    ->where('empleados.id', $id)
+    ->selectRaw('MONTH(em.dt_fecha) mes, 
+    YEAR(em.dt_fecha) anio, 
+    SUM(em.nu_entregas) total_entregas, 
+    SUM(em.nu_entregas) * 5 nu_total_sueldo_entregas, 
+    SUM(em.nu_horas_extras) total_horas_extras, 
+    SUM( CASE
+        WHEN em.id_rol = 1 THEN 10 * em.nu_horas_extras
+        WHEN em.id_rol = 2 THEN 5 * em.nu_horas_extras
+        ELSE 0
+    END) nu_total_sueldo_bono')    
+    ->groupBy('anio', 'mes')
+    ->orderBy('mes', 'desc')
+    ->orderBy('anio', 'desc')
+    ->get();
+
+    $nombresMeses = [
+      1 =>	"ENERO",
+      2 =>	"FEBRERO",
+      3 =>	"MARZO",
+      4 =>	"ABRIL",
+      5 =>	"MAYO",
+      6 =>	"JUNIO",
+      7 =>	"JULIO",
+      8 =>	"AGOSTO",
+      9 =>	"SEPTIEMBRE",
+      10 =>	"OCTUBRE",
+      11 =>	"NOVIEMBRE",
+      12 =>	"DICIEMBRE"
+    ];
+    
+    for ($i=0; $i < count($movimientos); $i++) {
+      //Base
+      $movimientos[$i]->vc_mes = $nombresMeses[$movimientos[$i]->mes];
+      $movimientos[$i]->nu_sueldo_base_hora = 30;
+      $movimientos[$i]->nu_sueldo_base = 30 * 8;
+
+      $movimientos[$i]->nu_sueldo_antes_impuestos = $movimientos[$i]->nu_sueldo_base + $movimientos[$i]->nu_total_sueldo_entregas + $movimientos[$i]->nu_total_sueldo_bono;
+      //Si el empleado es interno, recibe el 4% de su sueldo en vales
+      $movimientos[$i]->nu_sueldo_vales_despensa = $empleado->id_tipo == 1 ? bcdiv($movimientos[$i]->nu_sueldo_antes_impuestos * 0.04,'1',2) : 0;
+      
+      //Retencion ISR
+      $movimientos[$i]->nu_cantidad_retenida_isr = $movimientos[$i]->nu_sueldo_antes_impuestos > 16000 ? bcdiv($movimientos[$i]->nu_sueldo_antes_impuestos * 0.12,'1',2) :  bcdiv($movimientos[$i]->nu_sueldo_antes_impuestos * 0.09,'1',2);
+      $movimientos[$i]->nu_sueldo_final = bcdiv($movimientos[$i]->nu_sueldo_antes_impuestos - $movimientos[$i]->nu_cantidad_retenida_isr,'1',2);
+      $movimientos[$i]->nu_sueldo_final_menos_vales_despensa = bcdiv($movimientos[$i]->nu_sueldo_final - $movimientos[$i]->nu_sueldo_vales_despensa,'1',2);
+    }
+
+    return $movimientos;
   }
 }
