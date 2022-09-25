@@ -33,11 +33,6 @@ class MovimientosController extends Controller
       return false;
     }
 
-    // Validar acceso permitido por Roles
-    if ($usuario->rol->id_rol != 2) {
-      return false;
-    }
-
     return true;
   }
 

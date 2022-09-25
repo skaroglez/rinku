@@ -42,6 +42,30 @@
             ],
           },
         },
+        nomina : {
+          states: [
+          // DASHBOARD            
+            // EMPLEADOS
+              { state: 'empleados', url: 'empleados', file: 'empleados', ext: 'html' },
+              { state: 'empleadosNuevo', url: 'empleados/nuevo', file: 'empleadosNuevo', ext: 'html' },
+              { state: 'empleadosEditar', url: 'empleados/:id/editar', file: 'empleadosNuevo', ext: 'html' },
+              { state: 'empleadosSueldo', url: 'empleados/:id/sueldo', file: 'empleadosSueldo', ext: 'html' },
+            // MOVIMIENTOS DE EMPLEADOS
+              { state: 'movimientos', url: 'movimientos', file: 'movimientos', ext: 'html' },
+              { state: 'movimientosNuevo', url: 'movimientos/nuevo', file: 'movimientosNuevo', ext: 'html' },
+              { state: 'movimientosEditar', url: 'movimientos/:id/editar', file: 'movimientosNuevo', ext: 'html' },
+          ],
+          navigation : {
+            aside: [
+              // MENU
+                { name: 'Menú', url: '', icon: '', title: 1 },
+                  { name: 'Dashboard', url: '#/inicio', icon: 'ti-desktop', title: 0 },                
+                  { name: 'Empleados', url: '#/empleados', icon: 'ti-face-smile', title: 0 },
+                  { name: 'Movimientos', url: '#/movimientos', icon: 'ti-book', title: 0 },
+              
+            ],
+          },
+        },
       };
 
       return factory;

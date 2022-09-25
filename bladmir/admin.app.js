@@ -65,9 +65,9 @@ admin.run( [ '$rootScope', '$state', '$location', '$util', '$menu', '$authentica
 					states = [].concat.call( $menu.general, $menu.admin.states );
 					$rootScope.usuario.menu = [].concat.call( $menu.admin.navigation );
 				break;
-				case 3 : // Auxiliar
-					states = [].concat.call( $menu.general, $menu.auxiliar.states );
-					$rootScope.usuario.menu = [].concat.call( $menu.auxiliar.navigation );
+				case 3 : // Encargado de Nomina
+					states = [].concat.call( $menu.general, $menu.nomina.states );
+					$rootScope.usuario.menu = [].concat.call( $menu.nomina.navigation );
 				break;
 			}
 

@@ -31,12 +31,7 @@ class EmpleadosController extends Controller
     // Validar parametros de session necesarios
     if (!isset($usuario->rol->id)) {
       return false;
-    }
-
-    // Validar acceso permitido por Roles
-    if ($usuario->rol->id_rol != 2) {
-      return false;
-    }
+    }   
 
     return true;
   }
@@ -50,8 +45,9 @@ class EmpleadosController extends Controller
   {
     // Verificación para el uso del Controllador
     $body = (object)Request::all();
+   
     if (!$this->validateController($body->usuario)) {
-      return Response::json(['texto' => 'Actualmente no cuenta con los permisos necesarios.'], 418);
+       return Response::json(['texto' => 'Actualmente no cuenta con los permisos necesarios.'], 418);
     }
 
     $empleados = [];
