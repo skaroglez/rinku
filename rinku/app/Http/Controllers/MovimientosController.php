@@ -85,7 +85,7 @@ class MovimientosController extends Controller
               empleado.id_rol,
               re.vc_nombre as vc_rol_empleado,
               r.vc_nombre as vc_rol')
-    ->get();
+    ->orderBy('empleadosMovimientos.dt_fecha')->get();
 
     return $movimientos;
   }
