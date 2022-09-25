@@ -328,12 +328,16 @@ class EmpleadosController extends Controller
     ];
     
     for ($i=0; $i < count($movimientos); $i++) {
+      $total_dias_mes = date("t", mktime(0, 0, 0, $movimientos[$i]->mes, 1, $movimientos[$i]->anio));
       //Base
       $movimientos[$i]->vc_mes = $nombresMeses[$movimientos[$i]->mes];
       $movimientos[$i]->nu_sueldo_base_hora = 30;
-      $movimientos[$i]->nu_sueldo_base = 30 * 8;
+      //jornada de 8 horas
+      $movimientos[$i]->nu_sueldo_base_por_dia = 30 * 8;
+      $movimientos[$i]->nu_sueldo_base_por_mes = $movimientos[$i]->nu_sueldo_base_por_dia * $total_dias_mes;
 
-      $movimientos[$i]->nu_sueldo_antes_impuestos = $movimientos[$i]->nu_sueldo_base + $movimientos[$i]->nu_total_sueldo_entregas + $movimientos[$i]->nu_total_sueldo_bono;
+      //sueldp antes de retener impuestos
+      $movimientos[$i]->nu_sueldo_antes_impuestos = $movimientos[$i]->nu_sueldo_base_por_mes + $movimientos[$i]->nu_total_sueldo_entregas + $movimientos[$i]->nu_total_sueldo_bono;
       //Si el empleado es interno, recibe el 4% de su sueldo en vales
       $movimientos[$i]->nu_sueldo_vales_despensa = $empleado->id_tipo == 1 ? bcdiv($movimientos[$i]->nu_sueldo_antes_impuestos * 0.04,'1',2) : 0;
       

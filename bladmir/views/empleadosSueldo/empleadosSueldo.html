@@ -55,7 +55,7 @@
                   <tr ng-repeat="movimiento in movimientosMeses | filter:searchText">
                     <th><i class="ti-dollar"></i></th>
                     <td>[[ movimiento.vc_mes ]] [[ movimiento.anio ]]</td>
-                    <td style="text-align:center;" title="8hrs de jornada a $[[ movimiento.nu_sueldo_base_hora ]] por hora">$[[ movimiento.nu_sueldo_base ]]</td>
+                    <td style="text-align:center;" title="$[[ movimiento.nu_sueldo_base_hora ]] por hora">$[[ movimiento.nu_sueldo_base_por_mes ]]</td>
                     <td style="text-align:center;" title="Total entregas: [[ movimiento.total_entregas ]]">$[[ movimiento.nu_total_sueldo_entregas ]]</td>
                     <td style="text-align:center;" title="Total horas extras: [[ movimiento.total_horas_extras ]]">$[[ movimiento.nu_total_sueldo_bono ]]</td>
                     <td style="text-align:center;">$[[ movimiento.nu_cantidad_retenida_isr ]]</td>                    
